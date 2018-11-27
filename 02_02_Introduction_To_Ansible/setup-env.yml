@@ -8,9 +8,11 @@ Parameters:
 Mappings:
   RegionMap:
     us-east-1:
-      AMI: ami-0ff8a91507f77f867
+      AMI: ami-011b3ccf1bd6db744
+    us-east-2:
+      AMI: ami-0b500ef59d8335eee
     us-west-2:
-      AMI: ami-a0cfeed8
+      AMI: ami-036affea69a1101c9
 Resources:
   LnEc2InstanceWebServer1:
     Type: AWS::EC2::Instance
