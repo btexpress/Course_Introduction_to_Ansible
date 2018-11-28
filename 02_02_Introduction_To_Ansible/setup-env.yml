@@ -111,6 +111,10 @@ Resources:
     Type: AWS::EC2::EIP
     Properties:
       InstanceId: !Ref LnEc2InstanceLoadBalancer
+  LnElasticIp4:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref LnEc2ControlMachine
 Outputs:
   LnPublicIpAddressInstance1:
     Description: The Public IP address for EC2 instances
@@ -126,6 +130,11 @@ Outputs:
     Description: The Public IP address for EC2 instances
     Value: !GetAtt
       - LnEc2InstanceLoadBalancer
+      - PublicIp
+  LnPublicIpAddressControlMachine:
+    Description: The Public IP address for EC2 instances
+    Value: !GetAtt
+      - LnEc2ControlMachine
       - PublicIp
   WebsiteLink:
     Description: The Public DNS for the EC2 Instance
