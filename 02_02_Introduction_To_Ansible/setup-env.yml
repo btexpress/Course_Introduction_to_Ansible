@@ -1,3 +1,10 @@
+AWSTemplateFormatVersion: 2010-09-09
+Metadata:
+  Ansible-Test-Environment-Template-Version:
+    DATEOFLASTEDIT: 2018-11-27
+    TEMPLATEFILENAME: setup-env.yml
+  Modified last by:
+    NAME: William Tooles wtooles@gmail.com
 Parameters:
   NameOfService:
     Description: The tag name associated with this EC2 instances.
@@ -56,6 +63,21 @@ Resources:
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'load-balancer'] ]
+      SecurityGroups:
+        - !Ref LnSecurityGroup
+      KeyName: !Ref KeyName
+  LnEc2ControlMachine:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId:
+        Fn::FindInMap:
+        - RegionMap
+        - !Ref AWS::Region
+        - AMI
+      Tags:
+        - Key: Name
+          Value: !Join [ '-', [ !Ref NameOfService, 'control-machine'] ]
       SecurityGroups:
         - !Ref LnSecurityGroup
       KeyName: !Ref KeyName
