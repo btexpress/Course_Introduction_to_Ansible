@@ -15,13 +15,13 @@ Parameters:
 Mappings:
   RegionMap:
     us-east-1:
-      AMI: ami-011b3ccf1bd6db744
+      rhel7: ami-011b3ccf1bd6db744
     us-east-2:
-      AMI: ami-0b500ef59d8335eee
+      rhel7: ami-0b500ef59d8335eee
     us-west-1:
-      AMI: ami-18726478
+      rhel7: ami-18726478
     us-west-2:
-      AMI: ami-036affea69a1101c9
+      rhel7: ami-036affea69a1101c9
 Resources:
   LnEc2InstanceWebServer1:
     Type: AWS::EC2::Instance
@@ -31,7 +31,7 @@ Resources:
         Fn::FindInMap:
         - RegionMap
         - !Ref AWS::Region
-        - AMI
+        - rhel7
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'webserver' ,'1'] ]
@@ -46,7 +46,7 @@ Resources:
         Fn::FindInMap:
         - RegionMap
         - !Ref AWS::Region
-        - AMI
+        - rhel7
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'webserver' ,'2'] ]
@@ -61,7 +61,7 @@ Resources:
         Fn::FindInMap:
         - RegionMap
         - !Ref AWS::Region
-        - AMI
+        - rhel7
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'load-balancer'] ]
@@ -76,7 +76,7 @@ Resources:
         Fn::FindInMap:
         - RegionMap
         - !Ref AWS::Region
-        - AMI
+        - rhel7
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'control-machine'] ]
