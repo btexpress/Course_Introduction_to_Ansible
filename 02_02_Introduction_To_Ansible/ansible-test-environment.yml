@@ -1,3 +1,4 @@
+---
 AWSTemplateFormatVersion: 2010-09-09
 Metadata:
   Ansible-Test-Environment-Template-Version:
@@ -6,6 +7,18 @@ Metadata:
   Modified last by:
     NAME: William Tooles wtooles@gmail.com
 Parameters:
+  OperatingSystem:
+    Description: The operating system desired for the EC2 instance
+    Type: String
+    Default: amilinux2
+    AllowedValues:
+      - amilinux2
+      - amilinux
+      - rhel7
+      - rhel6
+      - ubuntu1804
+      - ubuntu1604
+      - ubuntu1404
   NameOfService:
     Description: The tag name associated with this EC2 instances.
     Type: String
@@ -15,13 +28,37 @@ Parameters:
 Mappings:
   RegionMap:
     us-east-1:
+      amilinux2: ami-009d6802948d06e52
+      amilinux: ami-09479453c5cde9639
       rhel7: ami-011b3ccf1bd6db744
+      rhel6: ami-1b05b10d
+      ubuntu1804: ami-0d2505740b82f7948
+      ubuntu1604: ami-0f9cf087c1f27d9b1
+      ubuntu1404: ami-05a36d3b9aa4a17ac
     us-east-2:
+      amilinux2: ami-02e680c4540db351e
+      amilinux: ami-023c8dbf8268fb3ca
       rhel7: ami-0b500ef59d8335eee
+      rhel6: ami-fa280c9f
+      ubuntu1804: ami-0cf8cc36b8c81c6de
+      ubuntu1604: ami-0653e888ec96eab9b
+      ubuntu1404: ami-0970ab4b97fe3a913
     us-west-1:
-      rhel7: ami-18726478
+      amilinux2: ami-011b6930a81cd6aaf
+      amilinux: ami-06ff511fea5db2c99
+      rhel7: ami-0ec1ad91f200c15a8
+      rhel6: ami-55a4fc35
+      ubuntu1804: ami-09c5eca75eed8245a
+      ubuntu1604: ami-08945b3352c7bf9c0
+      ubuntu1404: ami-056411f6be4840844
     us-west-2:
+      amilinux2: ami-01bbe152bf19d0289
+      amilinux: ami-0bb5806b2e825a199
       rhel7: ami-036affea69a1101c9
+      rhel6: ami-d61a92b6
+      ubuntu1804: ami-0f05ad41860678734
+      ubuntu1604: ami-076e276d85f524150
+      ubuntu1404: ami-0ea790e761025f9ce
 Resources:
   LnEc2InstanceWebServer1:
     Type: AWS::EC2::Instance
@@ -31,7 +68,7 @@ Resources:
         Fn::FindInMap:
         - RegionMap
         - !Ref AWS::Region
-        - rhel7
+        - !Ref OperatingSystem
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'webserver' ,'1'] ]
@@ -46,7 +83,7 @@ Resources:
         Fn::FindInMap:
         - RegionMap
         - !Ref AWS::Region
-        - rhel7
+        - !Ref OperatingSystem
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'webserver' ,'2'] ]
@@ -61,7 +98,7 @@ Resources:
         Fn::FindInMap:
         - RegionMap
         - !Ref AWS::Region
-        - rhel7
+        - !Ref OperatingSystem
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'load-balancer'] ]
@@ -76,7 +113,7 @@ Resources:
         Fn::FindInMap:
         - RegionMap
         - !Ref AWS::Region
-        - rhel7
+        - !Ref OperatingSystem
       Tags:
         - Key: Name
           Value: !Join [ '-', [ !Ref NameOfService, 'control-machine'] ]
@@ -141,4 +178,4 @@ Outputs:
   WebsiteLink:
     Description: The Public DNS for the EC2 Instance
     Value: !Sub 'http://${LnEc2InstanceLoadBalancer.PublicDnsName}'
-       
+...
