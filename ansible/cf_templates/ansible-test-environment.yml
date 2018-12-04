@@ -25,6 +25,7 @@ Parameters:
   KeyName:
     Description: Name of an existing EC2 KeyPair to enable SSH access into the server
     Type: AWS::EC2::KeyPair::KeyName
+    Default: ansible_training_keypair
 Mappings:
   RegionMap:
     us-east-1:
